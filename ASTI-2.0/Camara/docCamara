@@ -1,0 +1,30 @@
+Conectamos la RPI (junto al teclado y raton) e iniciamos sesion.
+IMPORTANTE: deberemos activar el SSH (para poder lanzar comandos desde el pc y q se ejecuten en la RPI)
+	    * ssh asti@192.168.50.129 (contra: danipau) (y entramos en la terminal de la RPI).
+
+La camara deberá conectarse siempre la parte azul en contra de los pines, (es decir la parte azul hacia el plastico).
+
+Para inicializar la camara:
+	$ sudo apt update
+	$ sudo apt install -y rpicam-apps
+	$ sudo nano /boot/firmware/config.txt    (modificamos el fichero txt para forzar q detecte la camara) 
+		Añadimos: camera_auto_detect=0 
+			  dtoverlay=imx219,cam0
+	$ sudo reboot
+	
+Ahora ya deberiamos detectar la camara con:
+	$ rpicam-hello
+	
+Podemos hacer fotos con:
+	$ rpicam-jpeg -o prueba.jpg
+	$ scp asti@192.168.50.129:~/prueba.jpg ~/Descargas/   (en otra terminal)
+	
+Podemos ver el video haciendo:
+	$ rpicam-hello -t 0
+	
+	
+	
+Tenemos creado ya 2 Ficheros dentro de la RPI (en la carpeta tenemos la copia de los ficheros para lectura)
+ConfigMascara.py (lo usamos para saber la configuracion del HSV min y max).
+Y Seguimiento.py (ya con los valores puestos analiza hacia donde tiene que ir, recto o Girar).
+
