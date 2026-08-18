@@ -35,18 +35,21 @@ Sobre los programas:
   exactos de la pista o del rival dependiendo de la luz que haya ese día en el pabellón.
 
 2- siguelineas
-  La primera prueba de concepto. Filtra el color de la cinta, busca el centro de la mancha y te dice si el coche tiene 
-  que ir a la izquierda, derecha o recto. Es básico, pero demuestra que el robot "ve".
+  Como el PRO pero modulado para usarse en Unity.
 
 3- siguelineasPro
   La versión pensada para correr de verdad. Recorta la mitad de arriba de la cámara para ir el doble de rápido y, 
   en vez de decir "gira", calcula el error exacto en píxeles para que luego los motores puedan girar súper suave.
 
 4- sumo
-  El radar de enemigos. Pasa como una "plancha" para limpiar la imagen de brillos raros y comprueba las medidas de 
-  la mancha para asegurarse de que ataca a una caja cuadrada (el rival) y no a un zapato del árbitro.
+  Como el PRO pero modulado para usarse en Unity.
 
 5- sumoPro
   El cerebro definitivo para el combate. Hace dos cosas a la vez: lo primero es mirar justo al morro para no pisar 
   la línea negra y evitar que nos descalifiquen. Solo si esa zona está a salvo, busca al rival por el ring y va a 
   por él a tope.
+
+6- Cerebro
+  Tenemos cerebro0.py donde no usamos Ros2, conecta todos los programas para q al pulsar los botones hagan su funcion.
+  y cerebro.py será el que debamos usar cuando decidamos que hacer con Ros2 (si cambiar la version de Linux o usar un Docker...)
+  

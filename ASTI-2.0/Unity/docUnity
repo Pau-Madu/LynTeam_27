@@ -1,0 +1,19 @@
+OJOOO !!
+
+    Cuando tengamos la ip definitiva del Robot (conectada al repetidor wifi de la competi), 
+    habrá que cambiar la ip de los scripts de unity...
+
+Lo que he hecho para conectar unity con la rpi es:
+ - sudo apt update
+ - sudo apt install python3-flask
+ - python3 emisor_video.py  (y ejecutamos el programa q emitirá el video)
+
+
+NUEVA ACTU:
+Tenemos los documentos del Siguelineas y Sumo MODULADOS para que el documento de CEREBRO.py pueda leerlos y ejecutarlos.
+
+*  Tenemos cerebro0.py donde no usamos Ros2, conecta todos los programas para q al pulsar los botones hagan su   
+   funcion.
+   y cerebro.py será el que debamos usar cuando decidamos que hacer con Ros2 (si cambiar la version de Linux o usar un Docker...)
+
+
