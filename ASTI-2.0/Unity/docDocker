@@ -1,0 +1,64 @@
+Guía Rápida: Iniciación a Docker en Raspberry Pi (By Pau)
+
+Fase 1: Instalación y Configuración del Motor
+  sudo apt update && sudo apt upgrade -y
+  curl -fsSL https://get.docker.com -o get-docker.sh
+  sudo sh get-docker.sh
+  sudo usermod -aG docker $USER  (OPCIONAL: para no tener que usar sudo en cada orden)
+  sudo reboot                    (Reiniciar la placa para aplicar los permisos)
+  docker --version               (Verificar que el motor está activo)
+
+Fase 2: Creación y Gestión de Contenedores
+  docker run hello-world            (descargar y ejecutar el contenedor de testeo)
+  docker run -it ubuntu:22.04 bash  (Lanza un sistema Ubuntu 22.04 y abre su terminal interactiva)
+  cat /etc/os-release               (Comprueba la versión del SO desde dentro del Docker)
+  exit        (Apaga el contenedor y volver a la terminal de la RPI)
+
+Fase 3 - ROS 2 en Docker
+  docker pull ros:humble            (Descargamos la imagen oficial de ROS 2 Humble)
+  docker run -it --name cerebro_ros2 -p 5000:5000 ros:humble bash    (Crear y arrancar el contenedor mapeando el puerto 5000)
+
+  * Comandos dentro del contenedor:
+  apt update
+  apt install ros-humble-demo-nodes-cpp -y
+  source /opt/ros/humble/setup.bash
+  ros2 run demo_nodes_cpp talker     (Para probar que funciona: Publishing: 'Hello World: 1'...)
+
+Fase 4 - Automatización con Docker Compose
+  nano docker-compose.yml     (crea un archivo con la siguiente estructura)
+
+  """
+    services:
+        cerebro_robot:
+            image: ros:humble
+            privileged: true
+            tty: true
+            ports:
+            - "5000:5000"
+            environment:
+            - DISPLAY=:0
+            volumes:
+            - /home/asti:/robot_code
+            devices:
+            - /dev/video0:/dev/video0
+  """
+
+  docker compose up -d                        (Encender el robot)
+  docker exec -it asti-cerebro_robot-1 bash   (Entrar al contenedor interactivo)
+    * cd /robot_code
+      ls                (Ir a la carpeta donde está tu código y comprobar que está todo)
+  docker compose down                         (Apagar y destruir el contenedor)
+
+Fase 5 - Entorno ROS 2
+  apt update && apt install python3-pip python3-opencv -y    (Paquetes base y visión)
+  apt install ros-humble-cv-bridge -y                        (Traductor ROS-OpenCV: para traducir el formato de imagen)
+  pip3 install Flask                                         (Servidor Web)
+
+  * Pasos para Iniciación (con unity y Ros)
+    source /opt/ros/humble/setup.bash                          Activador de ROS 2
+    1º Terminal --> pyhton3 emisor_video.py
+    2º Terminal --> docker compose up -d
+                    docker exec -it asti-cerebro_robot-1 bash
+                    cd /robot_code
+                    pyhton3 cerebro.py
+    Iniciar Play en Unity
